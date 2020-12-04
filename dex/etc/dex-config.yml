@@ -1,0 +1,41 @@
+issuer: http://dex:5556
+
+storage:
+  type: sqlite3
+  config:
+    file: ":memory:" #data/dex.db
+
+expiry:
+  signingKeys: "1m"
+  idTokens: "24h"
+
+enablePasswordDB: true
+
+web:
+  http: 0.0.0.0:5556
+
+connectors:
+  - type: mockCallback
+    id: mock
+    name: Test-Login
+  - type: microsoft
+    id: microsoft
+    name: Microsoft
+    config:
+      clientID: $DEX_MICROSOFT_CLIENT_ID
+      clientSecret: $DEX_MICROSOFT_CLIENT_SECRET
+      redirectURI: $DEX_MICROSOFT_CALLBACK_URI
+      tenant: $DEX_MICROSOFT_TENANT_ID
+
+staticClients:
+  - id: "clientapp"
+    secret: "-some-secret-"
+    name: "Client Application"
+    redirectURIs:
+      - "http://localhost/callback"
+
+staticPasswords:
+  - email: "admin@example.com"
+    userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+    username: "admin"
+    hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W" # "password"

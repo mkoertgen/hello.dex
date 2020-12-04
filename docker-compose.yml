@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  dex:
+    image: dexidp/dex:v2.26.0
+    ports:
+      - "5556:5556"
+    environment:
+      DEX_MICROSOFT_TENANT_ID: ${DEX_MICROSOFT_TENANT_ID:-}
+      DEX_MICROSOFT_CLIENT_ID: ${DEX_MICROSOFT_CLIENT_ID:-}
+      DEX_MICROSOFT_CLIENT_SECRET: ${DEX_MICROSOFT_CLIENT_SECRET:-}
+      DEX_MICROSOFT_CALLBACK_URI: ${DEX_MICROSOFT_CALLBACK_URI:-}
+      DEX_CLIENT_REDIRECT_URI: ${DEX_CLIENT_REDIRECT_URI:-}
+    volumes:
+      - ./dex/etc/dex-config.yml:/config.yml:ro
+      - dex-data:/data
+    command: "serve /config.yml"
